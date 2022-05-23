@@ -1,0 +1,235 @@
+
+-- Database creation must be performed outside a multi lined SQL file. 
+-- These commands were put in this file only as a convenience.
+-- 
+-- object: new_database | type: DATABASE --
+-- DROP DATABASE IF EXISTS new_database;
+CREATE DATABASE solutex;
+-- ddl-end --
+
+-- object: public.users_id | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.users_id CASCADE;
+CREATE SEQUENCE public.users_id
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public.users_id OWNER TO alexis;
+-- ddl-end --
+
+-- object: public."USER" | type: TABLE --
+-- DROP TABLE IF EXISTS public."USER" CASCADE;
+CREATE TABLE public."USER" (
+	"ID_USERS" text NOT NULL,
+	"NAME" text NOT NULL,
+	"PASSWORD" text NOT NULL,
+	"ROLE" integer NOT NULL,
+	"EMAIL" text,
+	"PHONE" text,
+	"LAST_NAME" text,
+	CONSTRAINT users_pk PRIMARY KEY ("ID_USERS")
+
+);
+-- ddl-end --
+ALTER TABLE public."USER" OWNER TO alexis;
+-- ddl-end --
+
+-- object: public.users_id_cp | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.users_id_cp CASCADE;
+CREATE SEQUENCE public.users_id_cp
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public.users_id_cp OWNER TO alexis_cp1;
+-- ddl-end --
+
+-- object: public."OPERATION_CARRIED_OUT" | type: TABLE --
+-- DROP TABLE IF EXISTS public."OPERATION_CARRIED_OUT" CASCADE;
+CREATE TABLE public."OPERATION_CARRIED_OUT" (
+	"AMOUNT" integer NOT NULL,
+	"TIME" integer NOT NULL,
+	"PAYMENT_STATUS" boolean NOT NULL,
+	"ID_USERS" text NOT NULL,
+	"ID_OPERATION" integer NOT NULL,
+	"ID_OPERATION_CARRIED_OUT" integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	CONSTRAINT "OPERATION_CARRIED_OUT_pk" PRIMARY KEY ("ID_OPERATION_CARRIED_OUT")
+
+);
+-- ddl-end --
+ALTER TABLE public."OPERATION_CARRIED_OUT" OWNER TO alexis_cp1;
+-- ddl-end --
+
+-- object: public.users_id_cp_cp | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.users_id_cp_cp CASCADE;
+CREATE SEQUENCE public.users_id_cp_cp
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public.users_id_cp_cp OWNER TO alexis_cp1_cp;
+-- ddl-end --
+
+-- object: public."OPERATION" | type: TABLE --
+-- DROP TABLE IF EXISTS public."OPERATION" CASCADE;
+CREATE TABLE public."OPERATION" (
+	"ID_OPERATION" integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	"OPERATION_NAME" text NOT NULL,
+	"OPERATION_COST" money NOT NULL,
+	CONSTRAINT "OPERATION_pk" PRIMARY KEY ("ID_OPERATION")
+
+);
+-- ddl-end --
+ALTER TABLE public."OPERATION" OWNER TO alexis_cp1_cp;
+-- ddl-end --
+
+-- object: public.users_id_cp_cp_cp | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.users_id_cp_cp_cp CASCADE;
+CREATE SEQUENCE public.users_id_cp_cp_cp
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public.users_id_cp_cp_cp OWNER TO alexis_cp1_cp_cp;
+-- ddl-end --
+
+-- object: public."PAYROLL" | type: TABLE --
+-- DROP TABLE IF EXISTS public."PAYROLL" CASCADE;
+CREATE TABLE public."PAYROLL" (
+	"ID_PAYROLL" integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	"SALARY" money NOT NULL,
+	"DATE" date,
+	"ID_USER" text NOT NULL,
+	CONSTRAINT "PAYROLL_pk" PRIMARY KEY ("ID_PAYROLL")
+
+);
+-- ddl-end --
+ALTER TABLE public."PAYROLL" OWNER TO alexis_cp1_cp_cp;
+-- ddl-end --
+
+-- object: public.users_id_cp_cp_cp1 | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.users_id_cp_cp_cp1 CASCADE;
+CREATE SEQUENCE public.users_id_cp_cp_cp1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public.users_id_cp_cp_cp1 OWNER TO alexis_cp1_cp_cp1;
+-- ddl-end --
+
+-- object: public."LOT" | type: TABLE --
+-- DROP TABLE IF EXISTS public."LOT" CASCADE;
+CREATE TABLE public."LOT" (
+	"ID_LOT" integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	"ACTIVE_LOT" boolean NOT NULL,
+	"AMOUNT" integer NOT NULL,
+	"PRICE" money NOT NULL,
+	"CREATE_DATE" date NOT NULL,
+	CONSTRAINT "LOT_pk" PRIMARY KEY ("ID_LOT")
+
+);
+-- ddl-end --
+ALTER TABLE public."LOT" OWNER TO alexis_cp1_cp_cp1;
+-- ddl-end --
+
+-- object: public.users_id_cp_cp_cp2 | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.users_id_cp_cp_cp2 CASCADE;
+CREATE SEQUENCE public.users_id_cp_cp_cp2
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public.users_id_cp_cp_cp2 OWNER TO alexis_cp1_cp_cp2;
+-- ddl-end --
+
+-- object: public."LIST_OPERATION" | type: TABLE --
+-- DROP TABLE IF EXISTS public."LIST_OPERATION" CASCADE;
+CREATE TABLE public."LIST_OPERATION" (
+	"ID_LOT" integer NOT NULL,
+	"ID_OPERATION" integer NOT NULL
+);
+-- ddl-end --
+ALTER TABLE public."LIST_OPERATION" OWNER TO postgres;
+-- ddl-end --
+
+-- object: public."ID_OPERATION_CARRIED_OUT" | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public."ID_OPERATION_CARRIED_OUT" CASCADE;
+CREATE SEQUENCE public."ID_OPERATION_CARRIED_OUT"
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+
+-- ddl-end --
+ALTER SEQUENCE public."ID_OPERATION_CARRIED_OUT" OWNER TO postgres;
+-- ddl-end --
+
+-- object: "FK_ID_USERS" | type: CONSTRAINT --
+-- ALTER TABLE public."OPERATION_CARRIED_OUT" DROP CONSTRAINT IF EXISTS "FK_ID_USERS" CASCADE;
+ALTER TABLE public."OPERATION_CARRIED_OUT" ADD CONSTRAINT "FK_ID_USERS" FOREIGN KEY ("ID_USERS")
+REFERENCES public."USER" ("ID_USERS") MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: "FK_ID_OPERATIONS" | type: CONSTRAINT --
+-- ALTER TABLE public."OPERATION_CARRIED_OUT" DROP CONSTRAINT IF EXISTS "FK_ID_OPERATIONS" CASCADE;
+ALTER TABLE public."OPERATION_CARRIED_OUT" ADD CONSTRAINT "FK_ID_OPERATIONS" FOREIGN KEY ("ID_OPERATION")
+REFERENCES public."OPERATION" ("ID_OPERATION") MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: "FK_ID_USERS" | type: CONSTRAINT --
+-- ALTER TABLE public."PAYROLL" DROP CONSTRAINT IF EXISTS "FK_ID_USERS" CASCADE;
+ALTER TABLE public."PAYROLL" ADD CONSTRAINT "FK_ID_USERS" FOREIGN KEY ("ID_USER")
+REFERENCES public."USER" ("ID_USERS") MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: "FK_ID_LOT" | type: CONSTRAINT --
+-- ALTER TABLE public."LIST_OPERATION" DROP CONSTRAINT IF EXISTS "FK_ID_LOT" CASCADE;
+ALTER TABLE public."LIST_OPERATION" ADD CONSTRAINT "FK_ID_LOT" FOREIGN KEY ("ID_LOT")
+REFERENCES public."LOT" ("ID_LOT") MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: "FK_ID_OPERATION" | type: CONSTRAINT --
+-- ALTER TABLE public."LIST_OPERATION" DROP CONSTRAINT IF EXISTS "FK_ID_OPERATION" CASCADE;
+ALTER TABLE public."LIST_OPERATION" ADD CONSTRAINT "FK_ID_OPERATION" FOREIGN KEY ("ID_OPERATION")
+REFERENCES public."OPERATION" ("ID_OPERATION") MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+
