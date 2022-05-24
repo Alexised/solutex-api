@@ -50,7 +50,7 @@ const getAllOperations = async (_req, res) => {
   } finally {
     // Make sure to release the client before any error handling,
     // just in case the error handling itself throws an error.
-    client.release();
+
   }
 };
 /**
@@ -84,7 +84,7 @@ const createOperations = async (req, res) => {
   } finally {
     // Make sure to release the client before any error handling,
     // just in case the error handling itself throws an error.
-    client.release();
+
   }
 };
 
@@ -116,7 +116,7 @@ const editOperations = async (req, res) => {
   } finally {
     // Make sure to release the client before any error handling,
     // just in case the error handling itself throws an error.
-    client.release();
+
   }
 };
 
