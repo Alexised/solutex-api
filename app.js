@@ -23,7 +23,7 @@ routesConfig(app);
  * Start server
  */
 function startServer() {
-  app.townHall = server.listen(port, host, (error) => {
+  app.townHall = server.listen(port, (error) => {
     error
       ? console.log(
           `[${new Date().toLocaleString()}] Error starting API Service: ${error}`
