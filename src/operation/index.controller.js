@@ -63,7 +63,6 @@ const getAllOperations = async (_req, res) => {
 const createOperations = async (req, res) => {
   const client = await DB.pool.connect();
   try {
-    console.log(`INSERT INTO public."OPERATION"("OPERATION_NAME","OPERATION_COST") VALUES ('${req.body.name}',${req.body.price});`);
     const result = await DB.pool.query(
       `INSERT INTO public."OPERATION"("OPERATION_NAME","OPERATION_COST") VALUES ('${req.body.name}',${req.body.price});`
     );
@@ -91,4 +90,36 @@ const createOperations = async (req, res) => {
   }
 };
 
-module.exports = { getAllOperations, createOperations };
+const editOperations = async (req, res) => {
+  const client = await DB.pool.connect();
+  try {
+    const result = await DB.pool.query(
+      `UPDATE public."OPERATION"
+      SET  "OPERATION_NAME"='${req.body.OPERATION_NAME}', "OPERATION_COST"='${req.body.OPERATION_COST}'
+      WHERE "ID_OPERATION"='${req.body.id}';`
+    );
+    res.locals.results = {
+      result: result.rows,
+      status: {
+        code: "SUCCESS",
+        description: "Successfully update .",
+      },
+    };
+    res.status(200);
+    return res.send(res.locals.results);
+  } catch (error) {
+    res.locals.results = {
+      status: {
+        code: "FAILURE",
+        description: "no se pudo editar la operacion'.",
+      },
+    };
+    res.status(404);
+  } finally {
+    // Make sure to release the client before any error handling,
+    // just in case the error handling itself throws an error.
+    client.release();
+  }
+};
+
+module.exports = { getAllOperations, createOperations, editOperations };

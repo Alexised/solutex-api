@@ -8,11 +8,14 @@ const initializePassport = require("./passportConfig");
 initializePassport(passport);
 
 const createUser = async (req, res) => {
+  // se crea la coneeccion a la base de datos
   const client = await DB.pool.connect();
   try {
+    // se valida que el usuario no exista
     const rd = await DB.pool.query(
       `SELECT * FROM public."USER" where "EMAIL"='${req.body.email}' OR "ID_USERS"='${req.body.id}' ;`
     );
+    // se reciben los datos de el formulario
     const user = {
       "id": req.body.id,
       username: req.body.username,
@@ -31,6 +34,7 @@ const createUser = async (req, res) => {
         },
       };
     } else {
+      // se inserta el usuario en la base de datos
       const result = await DB.pool.query(`INSERT INTO public."USER"(
         "ID_USERS", "NAME", "PASSWORD", "ROLE", "EMAIL", "PHONE", "LAST_NAME")
             VALUES ('${user.id}','${user.username}', '${user.password}', ${user.rol},'${user.email}','${user.phone}','${user.last_name}') RETURNING "ID_USERS";`);
