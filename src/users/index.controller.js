@@ -9,7 +9,6 @@ initializePassport(passport);
 
 const createUser = async (req, res) => {
   // se crea la coneeccion a la base de datos
-  const client = await DB.pool.connect();
   try {
     // se valida que el usuario no exista
     const rd = await DB.pool.query(
@@ -74,7 +73,7 @@ const createUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const client = await DB.pool.connect();
+
   try {
     const result = await DB.pool.query(
       `SELECT * FROM public."USER" where "ID_USERS"='${req.params.id}';`

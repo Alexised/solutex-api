@@ -14,7 +14,6 @@ const DB = require("../../db");
  */
 const getAllOperations = async (_req, res) => {
   // Connects to a connection pool to the Postgres database.
-  const client = await DB.pool.connect();
 
   try {
     // Prepare and execute query.
@@ -61,7 +60,6 @@ const getAllOperations = async (_req, res) => {
  * @returns {Promise} The fetched entities.
  */
 const createOperations = async (req, res) => {
-  const client = await DB.pool.connect();
   try {
     const result = await DB.pool.query(
       `INSERT INTO public."OPERATION"("OPERATION_NAME","OPERATION_COST") VALUES ('${req.body.name}',${req.body.price});`
@@ -91,7 +89,7 @@ const createOperations = async (req, res) => {
 };
 
 const editOperations = async (req, res) => {
-  const client = await DB.pool.connect();
+
   try {
     const result = await DB.pool.query(
       `UPDATE public."OPERATION"
